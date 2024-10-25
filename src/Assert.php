@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the brfop/assert package.
+ *
+ * (c) Paulo Ribeiro <ribeiro.paulor@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace BRFOP\Assert;
 
 use DateTime;
@@ -63,15 +72,27 @@ class Assert
         ));
     }
 
-    public static function all($value, string $message = '', callable ...$validator): void
+    public static function and($value, iterable $validators, string $message = ''): void
     {
-        if (Valid::all($value, ...$validator)) {
+        if (Valid::and($value, $validators)) {
             return;
         }
 
         static::reportInvalidArgument(\sprintf(
             $message ?: 'Expected a value to meet all requirements. Got: %s',
-            static::valueToString($value),
+            static::valueToString($value)
+        ));
+    }
+
+    public static function or($value, iterable $validators, string $message = ''): void
+    {
+        if (Valid::or($value, $validators)) {
+            return;
+        }
+
+        static::reportInvalidArgument(\sprintf(
+            $message ?: 'Expected a value to at least one of the requirements. Got: %s',
+            static::valueToString($value)
         ));
     }
 

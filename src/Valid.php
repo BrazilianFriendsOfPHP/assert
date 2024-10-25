@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the brfop/assert package.
+ *
+ * (c) Paulo Ribeiro <ribeiro.paulor@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace BRFOP\Assert;
 
 use InvalidArgumentException;
@@ -16,6 +25,38 @@ class Valid
     public static function string($value): bool
     {
         return \is_string($value);
+    }
+
+    /**
+     * @psalm-pure
+     *
+     * @psalm-assert int $value
+     *
+     * @param mixed  $value
+     */
+    public static function integer($value): bool
+    {
+        if (!\is_int($value)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @psalm-pure
+     *
+     * @psalm-assert numeric $value
+     *
+     * @param mixed  $value
+     */
+    public static function integerish($value): bool
+    {
+        if (!\is_numeric($value) || $value != (int) $value) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -49,13 +90,23 @@ class Valid
         return $expect == $value;
     }
 
-    public static function all($value, callable ...$validator): bool
+    public static function and($value, iterable $validators): bool
     {
-        foreach ($validator as $func) {
-            if (!$func($value)) {
+        foreach ($validators as $validator) {
+            if (!$validator($value)) {
                 return false;
             }
         }
         return true;
+    }
+
+    public static function or($value, iterable $validators): bool
+    {
+        foreach ($validators as $validator) {
+            if ($validator($value)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

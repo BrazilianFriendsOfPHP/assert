@@ -1,6 +1,6 @@
 <?php
 
-namespace BRFOP\Assert\Tests;
+namespace BRFOP\Assert\Tests\Valid;
 
 use BRFOP\Assert\Valid;
 use PHPUnit\Framework\TestCase;

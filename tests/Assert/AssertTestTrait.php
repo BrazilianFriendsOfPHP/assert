@@ -1,6 +1,6 @@
 <?php
 
-namespace BRFOP\Assert\Tests\Valid;
+namespace BRFOP\Assert\Tests\Assert;
 
 trait AssertTestTrait
 {
