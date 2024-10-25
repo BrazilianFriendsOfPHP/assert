@@ -42,7 +42,7 @@ class OrderController
     {
         /// ...
         if (Valid::uuid($request->query->get('parent_id'))) {
-            $parentId = $request->query_get('parent_id');
+            $parentId = $request->query->get('parent_id');
         }
         
         if(isset($parentId)){
