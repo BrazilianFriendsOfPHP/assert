@@ -53,7 +53,7 @@ class OrderController
 ```
 
 With the Valid class you can use the same validations in the Assert classe, but the methods will return `true`
-if the validation passes and `false` if not.
+if the validation passes and `false` otherwise.
 
 
 Assertion Example
